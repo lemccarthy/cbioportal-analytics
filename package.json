@@ -6,7 +6,17 @@
   "scripts": {
     "build": "tsc",
     "serve": "npm run build && node dist/index.js",
-    "start": "npm run build && nodemon dist/index.js"
+    "start": "npm run build && nodemon dist/index.js",
+    "pre-commit": "lint-staged"
+  },
+  "pre-commit": [
+    "pre-commit"
+  ],
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -23,6 +33,9 @@
   "devDependencies": {
     "@typescript-eslint/parser": "^1.7.0",
     "eslint": "^5.16.0",
-    "nodemon": "^1.18.11"
+    "lint-staged": "^8.1.5",
+    "nodemon": "^1.18.11",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.17.0"
   }
 }

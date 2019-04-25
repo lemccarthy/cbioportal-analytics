@@ -1,15 +1,16 @@
 import { google } from "googleapis";
 import { GaxiosResponse } from "gaxios";
+import * as googleServiceAccountKey from "./keyfile.json";
 
 const viewId = process.env.VIEW_ID || 34065145;
 const scopes = "https://www.googleapis.com/auth/analytics.readonly";
-const jwt = new google.auth.JWT(
-    process.env.CLIENT_EMAIL,
-    "",
-    process.env.PRIVATE_KEY,
-    scopes
-);
 
+const jwt = new google.auth.JWT(
+    googleServiceAccountKey.client_email,
+    undefined,
+    googleServiceAccountKey.private_key,
+    ["https://www.googleapis.com/auth/analytics.readonly"]
+);
 export default async function getData(
     studyName: string
 ): Promise<GaxiosResponse> {
@@ -20,6 +21,6 @@ export default async function getData(
         "start-date": "30daysAgo",
         "end-date": "today",
         metrics: "ga:uniqueEvents,ga:totalEvents",
-        filters: `ga:eventAction==query,ga:eventLabel==${studyName}`
+        filters: `ga:eventCategory==studyPage;ga:eventAction==studyPageLoad;ga:eventLabel==${studyName}\\,`
     });
 }

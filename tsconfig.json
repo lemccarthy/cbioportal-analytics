@@ -6,6 +6,7 @@
     "sourceMap": true,
     "strict": true,
     "noImplicitAny": true,
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*.ts"

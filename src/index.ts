@@ -10,15 +10,22 @@ const port = process.env.PORT || 1337;
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
+server.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+});
 
 server.get("/", async (req, res, next) => {
     try {
         const parsedURL = url.parse(req.url);
         if (parsedURL.query) {
             const parameters = querystring.parse(parsedURL.query);
-            console.log(`Queried study: ${parameters.studyId}`);
-            if (!isArray(parameters.studyId)) {
-                const response = await getData(parameters.studyId);
+            if (!isArray(parameters.studyName)) {
+                const response = await getData(parameters.studyName);
                 res.json(response);
             }
         }

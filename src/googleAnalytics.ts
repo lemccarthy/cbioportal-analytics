@@ -25,7 +25,6 @@ const baseOptions = {
     metrics: "ga:uniqueEvents,ga:totalEvents",
     filters: ""
 };
-const eventKeys = ["ga:uniqueEvents", "ga:totalEvents"];
 
 const checkNullReturn = (
     key: string,

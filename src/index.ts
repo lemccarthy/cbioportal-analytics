@@ -7,11 +7,12 @@ import getData from "./googleAnalytics";
 
 const server = express();
 const port = process.env.PORT || 1337;
+const cbioOrigin = process.env.CBIO_ORIGIN || "http://localhost:8080";
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Origin", cbioOrigin);
     res.header(
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept"

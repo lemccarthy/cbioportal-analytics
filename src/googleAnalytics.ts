@@ -9,13 +9,13 @@ export interface IAnalyticsResponse {
     timesUniqueVisited: number;
 }
 
-const viewId = process.env.VIEW_ID || 34065145;
+const viewId = process.env.VIEW_ID || 0;
 const scopes = "https://www.googleapis.com/auth/analytics.readonly";
 const jwt = new google.auth.JWT(
     googleServiceAccountKey.client_email,
     undefined,
     googleServiceAccountKey.private_key,
-    ["https://www.googleapis.com/auth/analytics.readonly"]
+    [scopes]
 );
 const baseOptions = {
     auth: jwt,
@@ -76,7 +76,7 @@ export default async function getData(
     const { unique: totalUniqueUses, total: totalUses } = getTotals(query);
 
     if (!uniqueVisits || !totalVisits || !totalUniqueUses || !totalUses) {
-        throw new Error("400");
+        throw new Error("400: One of the metrics returned null.");
     }
     return {
         timesVisited: parseInt(uniqueVisits),
